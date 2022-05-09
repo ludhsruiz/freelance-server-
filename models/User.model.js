@@ -26,8 +26,7 @@ const userSchema = new Schema(
     profileImg: { 
       type: String, 
       default: 'https://i.stack.imgur.com/l60Hf.png' 
-      },
-  
+    },
     description: {
       type: String,
       required: true, 
@@ -35,43 +34,38 @@ const userSchema = new Schema(
     ocupacion: {
         type : string,
         enum: [Digital, Education, Marketing, Events, Diseño, Foto, otros ]
-      },
-  
+    },
     role: {
       type: String, 
       enum: ['USER', 'ADMIN', 'PUBLISHER'], 
       default: 'USER'
-    },
-      
+    },      
     match :  [
              {
                  type: Schema.Types.ObjectId,
                  ref:"user",
              },
-         ], 
-  
+         ],   
     publisher :  [
              {
                  type: Schema.Types.ObjectId,
                  ref:"publisher",
              },
          ],  
-  
     eventAssitance :  [
              {
                  type: Schema.Types.ObjectId,
                  ref:"event",
              },
-         ],   
-  
-     coursesAssitance :  [
+         ],     
+    coursesAssitance :  [
              {
                  type: Schema.Types.ObjectId,
                  ref:"course",
              },
          ],              
-  }
-  
+  },
+  { timestamps: true }  
 );
 
 const User = model("User", userSchema);
