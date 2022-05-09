@@ -4,11 +4,11 @@ const postSchema = new Schema(
   {
     writer : {
         type: Schema.Types.ObjectId,
-       ref:"user",
+       ref:"User",
    },
    receiver: {
         type: Schema.Types.ObjectId,
-       ref:"user",
+       ref:"User",
    },
    comment: {
        type: string,

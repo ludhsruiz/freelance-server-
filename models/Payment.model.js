@@ -6,9 +6,9 @@ const paymentSchema = new Schema(
         type: Schema.Types.ObjectId,
         ref: 'User',
     },        
-    order: {
+    event: {
               type: Schema.Types.ObjectId,
-              ref:"event",
+              ref:"Event",
     },		
     paymentMethod: {
                 type: String,

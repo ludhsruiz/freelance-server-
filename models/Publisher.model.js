@@ -14,10 +14,6 @@ const publisherSchema = new Schema(
         lowercase: true,
         trim: true
       },
-      password: {
-        type: String,
-        required: [true, 'La contraseña es obligatoria']
-      },
       profileImg: { 
         type: String, 
         default: 'https://i.stack.imgur.com/l60Hf.png' 
@@ -29,7 +25,7 @@ const publisherSchema = new Schema(
       },
      representative:  {
                    type: Schema.Types.ObjectId,
-                   ref:"user",
+                   ref:"User",
                },
     },
     { timestamps: true }

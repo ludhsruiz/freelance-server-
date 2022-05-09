@@ -2,11 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const offerSchema = new Schema(
   {
-    offerName: {   
+    title: {   
         type: String,
         required: [true, 'El nombre de evento es obligatorio'],
     },
-    company : {   
+    companyName : {   
         type: String,
         required: true,
     },
@@ -18,9 +18,9 @@ const offerSchema = new Schema(
         type: String,
         required: [true, 'La descripción es obligatoria'],
     },
-    writer: {
+    publisher: {
                 type: Schema.Types.ObjectId,
-                ref:"user",
+                ref:"User",
     },
     },
     { timestamps: true }

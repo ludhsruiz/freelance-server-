@@ -22,17 +22,17 @@ const courseSchema = new Schema(
             type: String
     },
     price: {
-            type: String
+            type: Number
     },       
     attendants:  [
                {
                    type: Schema.Types.ObjectId,
-                   ref:"user",
+                   ref:"User",
                },
            ], 
     comments:  {
                    type: Schema.Types.ObjectId,
-                   ref:"comment",
+                   ref:"Comment",
             },
     },
     { timestamps: true }
