@@ -95,8 +95,7 @@ PUBLISHER /api/publishers/
 
 
 --------- CLIENT --------------------------
-
-
+```
   HOME    
 
 | Type     | Description                
