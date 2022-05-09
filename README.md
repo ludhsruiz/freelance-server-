@@ -102,7 +102,6 @@ PUBLISHER /api/publishers/
 | Type     | Description                
 | :------- | :------------------------- 
 | `/` | Home |  
-```
 
 
   EVENTS
