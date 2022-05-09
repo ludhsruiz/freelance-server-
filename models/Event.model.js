@@ -2,7 +2,7 @@ const { Schema, model } = require("mongoose");
 
 const eventSchema = new Schema(
   {
-    name: {   
+    title: {   
         type: String,
         required: [true, 'El nombre de evento es obligatorio'],
     },
@@ -24,12 +24,12 @@ const eventSchema = new Schema(
     attendants:  [
                {
                    type: Schema.Types.ObjectId,
-                   ref:"user",
+                   ref:"User",
                },
            ], 
     representative:  {
                    type: Schema.Types.ObjectId,
-                   ref:"user",
+                   ref:"User",
                 },
     },
     { timestamps: true }

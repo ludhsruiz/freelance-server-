@@ -21,7 +21,6 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: [true, 'La contraseña es obligatoria']
     },
     profileImg: { 
       type: String, 
@@ -31,9 +30,9 @@ const userSchema = new Schema(
       type: String,
       required: true, 
     },
-    ocupacion: {
-        type : string,
-        enum: [Digital, Education, Marketing, Events, Diseño, Foto, otros ]
+    occupation: {
+        type : String,
+        enum: ['Digital', 'Education', 'Marketing', 'Events', 'Diseño', 'Foto', 'otros' ]
     },
     role: {
       type: String, 
@@ -43,25 +42,25 @@ const userSchema = new Schema(
     match :  [
              {
                  type: Schema.Types.ObjectId,
-                 ref:"user",
+                 ref:"User",
              },
          ],   
-    publisher :  [
+    publishers:  [
              {
                  type: Schema.Types.ObjectId,
-                 ref:"publisher",
+                 ref:"Publisher",
              },
          ],  
-    eventAssitance :  [
+    events :  [
              {
                  type: Schema.Types.ObjectId,
-                 ref:"event",
+                 ref:"Event",
              },
          ],     
-    coursesAssitance :  [
+    courses :  [
              {
                  type: Schema.Types.ObjectId,
-                 ref:"course",
+                 ref:"Course",
              },
          ],              
   },
