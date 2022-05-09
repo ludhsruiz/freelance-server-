@@ -118,7 +118,7 @@ PUBLISHER /api/publishers/
 | Type     | Description                |
 | :------- | :------------------------- |
 | `/offers` | Offers   |         
-| ` offers/:offert_id`' | Offert details |    
+| `/offers/:offert_id`' | Offert details |    
 
 
 
