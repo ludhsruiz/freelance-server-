@@ -7,14 +7,14 @@ const publisherSchema = new Schema(
         required: [true, 'El nombre de la compañia es obligatorio'],
         trim: true
       },
-      email: {
+      contacto: {
         type: String,
         unique: true,
         required: [true, 'El email es obligatorio'],
         lowercase: true,
         trim: true
       },
-      profileImg: { 
+      companyLogo: { 
         type: String, 
         default: 'https://i.stack.imgur.com/l60Hf.png' 
         },
@@ -23,7 +23,7 @@ const publisherSchema = new Schema(
         required: true, 
         trim: true
       },
-     representative:  {
+      owner:  {
                    type: Schema.Types.ObjectId,
                    ref:"User",
                },
