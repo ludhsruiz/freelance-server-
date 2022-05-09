@@ -235,16 +235,7 @@ User Model
   },
   ocupacion: {
       type : string
-      enum: [Digital, Education, Marketing, Events, Diseño, Fotografia ............. otros ]
-
-    Artes gráficas y diseño
-    Marketing digital
-    Redacción y traducción -- educacion
-    Video y animación
-    Música y audio  
-    Programación y tecnología
-    Datos
-    Negocios -- Finance & Accounting HR & Training Legal
+      enum: [Digital, Education, Marketing, Events, Diseño, Fotografia,otros ]
   }
 
   role: {
@@ -358,7 +349,7 @@ Event Model
 
 
 
-Offert Model  ( subscribe - alert company )
+Offert Model  
 
   OfferName: {   
     type: String,
@@ -384,7 +375,7 @@ Offert Model  ( subscribe - alert company )
    
 
 
-Post Model      (user contact button alert )
+Post Model      
     writer : {
          type: Schema.Types.ObjectId,
         ref:"user",
@@ -401,7 +392,7 @@ Post Model      (user contact button alert )
 
 
 
-Course Model  ( users soliticar admin courses by groups only admin can create them and publishers)
+Course Model  
 
   name: {   
     type: String,
@@ -440,42 +431,34 @@ Course Model  ( users soliticar admin courses by groups only admin can create th
 
 
 
-Subscription Model ( for company ?? )
+Subscription Model 
   {
-    coRenter: {
+    publisher: {
       type: Schema.Types.ObjectId,
       ref: 'User'
-    },
-    house: {
-      type: Schema.Types.ObjectId,
-      ref: 'House'
     },
     totalPrice: {
       type: Number
     },
-    totalDays: {
+    Year: {
       type: Number
     },
-    daysLeftToBook: {
-      type: Number
-    }
-  },
+  }
 
 
 
 
-Payment Model ( for Events pay save in profile<??>) // course
+Payment Model 
 
 user: {
-			type: mongoose.Schema.Types.ObjectId, // Gets id of User
-			required: true,
-			ref: 'User', // Adds relationship between Order and User
-		},
+	type: Schema.Types.ObjectId,
+	ref: 'User',
+	},
     
-    order: {
+order: {
           type: Schema.Types.ObjectId,
           ref:"event",
-    },		
+ 	},		
 
 		paymentMethod: {
 			type: String,
@@ -493,7 +476,9 @@ user: {
 			required: true,
 			default: false,
 		
-
+		},
+},		
+		
 
 
 
