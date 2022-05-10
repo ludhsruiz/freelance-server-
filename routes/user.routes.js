@@ -2,6 +2,8 @@ const router = require("express").Router()
 
 const User = require('./../models/User.model')
 
+//const { isAuthenticated } = require('./../middleware/jwt.middleware')
+
 router.get("/", (req, res) => {
 
     User
@@ -15,6 +17,8 @@ router.put("/:user_id/edit", (req, res) => {
     const { user_id } = req.params
     const { name, surname, email, password } = req.body
 
+    
+
     User
         .findByIdAndUpdate(user_id, { name, surname, email, password }, { new: true })
         .then(response => res.json(response))
@@ -27,7 +31,6 @@ router.delete("/:user_id/delete", (req, res) => {
 
     User
         .findByIdAndDelete(user_id)
-        //.then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
 
