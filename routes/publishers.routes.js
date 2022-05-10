@@ -16,12 +16,20 @@ router.get("/", (req, res, next) => {
 router.post("/create", (req, res, next) => {
 
   const { name, contacto, companyLogo, description, owner } = req.body
-
+  const userId = req.payload._id
 
   Publisher
     .create({ name, contacto, companyLogo, description, owner })
+    .then(() => {
+      return Subscription.create({ publisher: userId, year, totalPrice})
+     })
+
     .then(response => res.json(response))
-    .catch(err => res.status(500).json(err))
+    .catch(err => {
+      console.log(err)
+      res.status(500).json(err)
+  })
+
 })
 
 // PUBLISHERS EDIT
@@ -45,7 +53,7 @@ router.delete("/:id/delete", (req, res, next) => {
 
     Publisher
         .findByIdAndDelete(id)
-        .then(() => { res.json(response)})
+        .then(response => res.json(response))
         .catch((err) => next(err))
 })
 
@@ -54,11 +62,11 @@ router.delete("/:id/delete", (req, res, next) => {
 router.put("/:id/follow", (req, res, next) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id    ____ token
+    // const { _id } = req.payload
 
     Publisher
-        .findByIdAndUpdate(thisUser, { $addToSet: { publishers : id } })
-        .then(response => { res.json(response)})
+        .findByIdAndUpdate(_id, { $addToSet: { publishers : id } })
+        .then(response => res.json(response))
         .catch((err) => next(err))
 })
 
@@ -67,11 +75,11 @@ router.put("/:id/follow", (req, res, next) => {
 router.put("/:id/unfollow",  (req, res, next) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id
+    // const { _id } = req.payload
 
     Publisher     
-        .findByIdAndUpdate(thisUser, { $pull: { publishers : id } })
-        .then(() => { res.json(response) })
+        .findByIdAndUpdate(_id, { $pull: { publishers : id } })
+        .then(response => res.json(response))
         .catch((err) => next(err))
 })
 

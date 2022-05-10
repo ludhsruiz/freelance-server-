@@ -6,7 +6,7 @@ const courseSchema = new Schema(
         type: String,
         required: [true, 'El nombre del curso es obligatorio'],
     },
-      description: {
+    description: {
         type: String,
         required: [true, 'La descripción es obligatoria'],
     },
