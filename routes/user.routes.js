@@ -2,7 +2,7 @@ const router = require("express").Router()
 
 const User = require('./../models/User.model')
 
-router.get("/getAlluser", (req, res) => {
+router.get("/", (req, res) => {
 
     User
         .find()
@@ -10,17 +10,18 @@ router.get("/getAlluser", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.post("/getOneUser/:user_id/edit", (req, res) => {
+router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
+    const { name, surname, email, password } = req.body
 
     User
-        .findById(user_id)
+        .findByIdAndUpdate(user_id, { name, surname, email, password }, { new: true })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
 
-router.post("/deleteUser/:user_id/delete", (req, res) => {
+router.delete("/:user_id/delete", (req, res) => {
 
     const { user_id } = req.params
 
@@ -30,7 +31,7 @@ router.post("/deleteUser/:user_id/delete", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.post("/followUser/:user_id/follow", (req, res) => {
+router.put("/:user_id/follow", (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.body
@@ -45,7 +46,7 @@ router.post("/followUser/:user_id/follow", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.post("/unfollowUser/:user_id/unfollow", (req, res) => {
+router.put("/:user_id/unfollow", (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.body
