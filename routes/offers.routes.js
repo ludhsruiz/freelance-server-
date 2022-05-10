@@ -4,7 +4,7 @@ const Offer = require("../models/Offer.model")
 
 
 // ALL OFFERS
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
 
   Offer
     .find()
@@ -14,7 +14,7 @@ router.get("/", (req, res, next) => {
 
 
 // OFFER CREATE
-router.post("/create", (req, res, next) => {
+router.post("/create", (req, res) => {
 
   const { title, companyName, companyLogo, description } = req.body
 
@@ -25,7 +25,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // OFFER EDIT
-router.put("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res ) => {
 
     const { id } = req.params
     const { title, companyName, companyLogo, description } = req.body
@@ -39,7 +39,7 @@ router.put("/:id/edit", (req, res, next) => {
 
 
 // OFFER DELETE 
-router.delete("/:id/delete", (req, res, next) => {
+router.delete("/:id/delete", (req, res) => {
 
     const { id } = req.params
 
@@ -51,7 +51,7 @@ router.delete("/:id/delete", (req, res, next) => {
 
 
 // OFFER SUBSCRIBE (( send to publisher info ??? ))
-router.put("/:id/attendance", (req, res, next) => {
+router.put("/:id/attendance", (req, res) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id    ____ token

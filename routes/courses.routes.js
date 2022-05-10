@@ -4,7 +4,7 @@ const Course = require("../models/Course.model")
 
 
 // ALL COURSES
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
 
   Course
     .find()
@@ -24,7 +24,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // COURSE EDIT
-router.put("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res) => {
 
     const { id } = req.params
     const { name, description, date, img, location, price } = req.body
@@ -38,7 +38,7 @@ router.put("/:id/edit", (req, res, next) => {
 
 
 // COURSE DELETE (( pay back ???? ))
-router.delete("/:id/delete", (req, res, next) => {
+router.delete("/:id/delete", (req, res ) => {
 
     const { id } = req.params
 
@@ -50,7 +50,7 @@ router.delete("/:id/delete", (req, res, next) => {
 
 
 // COURSE ATTENDANCE  (( pay button n add to user ))
-router.put("/:id/attendance", (req, res, next) => {
+router.put("/:id/attendance", (req, res) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id    ____ token
@@ -63,7 +63,7 @@ router.put("/:id/attendance", (req, res, next) => {
 
 
 // LEAVE COURSE    (( pay button n delete from user  ))
-router.put("/:id/leave",  (req, res, next) => {
+router.put("/:id/leave",  (req, res ) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id
