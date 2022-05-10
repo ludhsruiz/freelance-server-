@@ -21,6 +21,9 @@ const eventSchema = new Schema(
     location: {
             type: String
     },
+    price: {
+        type: Number
+    },
     attendants:  [
                {
                    type: Schema.Types.ObjectId,
