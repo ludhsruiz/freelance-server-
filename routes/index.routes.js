@@ -16,12 +16,11 @@ router.use("/publishers", require('./publishers.routes'))
 
 router.use("/offers", require('./offers.routes'))
 
+router.use("/post", require('./post.routes'))
 
-
-
-// router.use("/post", require('./post.routes'))
-// payment 
-// router.use("/subscription", require('./subscription.routes'))
+router.use("/comments", require('./comments.routes'))
+ 
+router.use("/subscription", require('./subscription.routes'))
 
 
 module.exports = router

@@ -7,10 +7,8 @@ const subscriptionSchema = new Schema(
          ref: 'User'
     },
     totalPrice: {
-        type: Number
-    },
-    year: {
-        type: Number
+        type: Number,
+        default: 120
     },
    },
    { timestamps: true }

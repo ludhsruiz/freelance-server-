@@ -4,7 +4,7 @@ const Publisher = require("../models/Publisher.model")
 
 
 // ALL PUBLISHERS
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
 
   Publisher
     .find()
@@ -13,16 +13,16 @@ router.get("/", (req, res, next) => {
 })
 
 // PUBLISHERS CREATE
-router.post("/create", (req, res, next) => {
+router.post("/create", (req, res) => {
 
   const { name, contacto, companyLogo, description, owner } = req.body
   const userId = req.payload._id
 
   Publisher
     .create({ name, contacto, companyLogo, description, owner })
-    .then(() => {
-      return Subscription.create({ publisher: userId, year, totalPrice})
-     })
+    // .then(() => {
+    //   return Subscription.create({ publisher: userId, totalPrice})
+    //  })
 
     .then(response => res.json(response))
     .catch(err => {
@@ -33,7 +33,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // PUBLISHERS EDIT
-router.put("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res) => {
 
     const { id } = req.params
     const { name, contacto, companyLogo, description, owner } = req.body

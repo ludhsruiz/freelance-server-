@@ -4,7 +4,7 @@ const Event = require("../models/Event.model")
 
 
 // ALL EVENTS
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
 
   Event
     .find()
@@ -13,7 +13,7 @@ router.get("/", (req, res, next) => {
 })
 
 // EVENT CREATE
-router.post("/create", (req, res, next) => {
+router.post("/create", (req, res) => {
 
   const { title, description, date, img, location, price } = req.body
 
@@ -24,7 +24,7 @@ router.post("/create", (req, res, next) => {
 })
 
 // EVENTS EDIT
-router.put("/:id/edit", (req, res, next) => {
+router.put("/:id/edit", (req, res) => {
 
     const { id } = req.params
     const { title, description, date, img, location, price } = req.body
@@ -38,7 +38,7 @@ router.put("/:id/edit", (req, res, next) => {
 
 
 // EVENT DELETE (( pay back ???? ))
-router.delete("/:id/delete", (req, res, next) => {
+router.delete("/:id/delete", (req, res) => {
 
     const { id } = req.params
 
@@ -50,7 +50,7 @@ router.delete("/:id/delete", (req, res, next) => {
 
 
 // EVENT ATTENDANCE  (( pay button n add to user ))
-router.put("/:id/attendance", (req, res, next) => {
+router.put("/:id/attendance", (req, res) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id    ____ token
@@ -63,7 +63,7 @@ router.put("/:id/attendance", (req, res, next) => {
 
 
 // LEAVE EVENT    (( pay button n delete from user  ))
-router.put("/:id/leave",  (req, res, next) => {
+router.put("/:id/leave",  (req, res) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id
