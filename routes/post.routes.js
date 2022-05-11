@@ -3,9 +3,9 @@ const Post = require('./../models/Post.model')
 
 //const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
+// get or post ?????
+router.get("/:receiver", (req, res) => {
 
-router.get("/:receiver_id", (req, res) => {
-    
     //const thisUser = req.payload._id
 
     const { receiver } = req.params
