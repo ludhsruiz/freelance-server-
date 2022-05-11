@@ -1,17 +1,14 @@
 const router = require("express").Router()
-
-
 const Post = require('./../models/Post.model')
 
 //const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
 
-router.get("/:receiver", (req, res) => {
-
+router.get("/:receiver_id", (req, res) => {
+    
     //const thisUser = req.payload._id
 
     const { receiver } = req.params
-    console.log(req.params)
 
     Post
         .find({ sender: thisUser, receiver })
@@ -32,9 +29,9 @@ router.post("/send", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.delete("/:post_id/delete", (req, res) => {
+router.delete("/:id/delete", (req, res) => {
 
-    const { post_id } = req.params
+    const { id } = req.params
 
     Post
         .findByIdAndDelete(user_id)

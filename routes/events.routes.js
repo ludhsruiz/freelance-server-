@@ -12,6 +12,17 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+// ONE EVENT
+router.get("/:id", (req, res) => {
+
+  const { id } = req.params
+
+  Event
+    .findById(id)
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
+
 // EVENT CREATE
 router.post("/create", (req, res) => {
 

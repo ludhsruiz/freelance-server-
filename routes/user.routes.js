@@ -39,7 +39,6 @@ router.delete("/:user_id/delete", (req, res) => {
 
 
 // USER FOLLOW
-
 router.put("/:user_id/follow", (req, res) => {
 
     const { user_id } = req.params
@@ -57,7 +56,6 @@ router.put("/:user_id/follow", (req, res) => {
 
 
 // USER UNFOLLOW
-
 router.put("/:user_id/unfollow", (req, res) => {
 
     const { user_id } = req.params

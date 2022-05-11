@@ -24,6 +24,7 @@ router.post("/create", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+
 // OFFER EDIT
 router.put("/:id/edit", (req, res ) => {
 
@@ -51,7 +52,7 @@ router.delete("/:id/delete", (req, res) => {
 
 
 // OFFER SUBSCRIBE (( send to publisher info ??? ))
-router.put("/:id/attendance", (req, res) => {
+router.put("/:id/subscribe", (req, res) => {
 
     const { id } = req.params;
     // const thisUser = req.session.currentUser._id    ____ token
@@ -61,10 +62,6 @@ router.put("/:id/attendance", (req, res) => {
         .then(response => { res.json(response)})
         .catch((err) => next(err))
 })
-
-
-
-
 
 
 
