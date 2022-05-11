@@ -10,6 +10,8 @@ const saltRounds = 10
 
 router.post('/signup', (req, res, next) => {
 
+  console.log('_________ok')
+
   const { name, surname, email, password } = req.body
 
   if (password.length < 2) {
@@ -29,9 +31,9 @@ router.post('/signup', (req, res, next) => {
       const salt = bcrypt.genSaltSync(saltRounds)
       const hashedPassword = bcrypt.hashSync(password, salt)
 
-      return User.create({ email, password: hashedPassword, name, surname})
+      return User.create({ email, password: hashedPassword, name, surname })
     })
-    
+
     .then((createdUser) => {
       console.log('----', createdUser)
       const { email, name, surname, _id } = createdUser

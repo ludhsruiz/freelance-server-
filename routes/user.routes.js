@@ -13,13 +13,24 @@ router.get("/", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
+// GET ONE USER
+router.get("/:user_id", (req, res) => {
+
+    const { user_id } = req.params
+
+    User
+        .findById(user_id)
+        .then(response => res.json(response))
+        .catch(err => res.status(500).json(err))
+})
+
 // EDIT USER 
 router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
     const { name, surname, email, password } = req.body
 
-    
+
 
     User
         .findByIdAndUpdate(user_id, { name, surname, email, password }, { new: true })

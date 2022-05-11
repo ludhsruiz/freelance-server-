@@ -18,8 +18,8 @@ router.use("/offers", require('./offers.routes'))
 
 router.use("/post", require('./post.routes'))
 
-router.use("/comments", require('./comments.routes'))
- 
+//router.use("/comments", require('./comments.routes'))
+
 router.use("/subscription", require('./subscription.routes'))
 
 
