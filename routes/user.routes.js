@@ -28,12 +28,10 @@ router.get("/:user_id", (req, res) => {
 router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
-    const { name, surname, email, password } = req.body
-
-
+    const { name, surname, email, password, description, occupation } = req.body
 
     User
-        .findByIdAndUpdate(user_id, { name, surname, email, password }, { new: true })
+        .findByIdAndUpdate(user_id, { name, surname, email, password, description, occupation }, { new: true })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
@@ -50,6 +48,7 @@ router.delete("/:user_id/delete", (req, res) => {
 
 
 // USER FOLLOW
+
 router.put("/:user_id/follow", (req, res) => {
 
     const { user_id } = req.params
@@ -67,6 +66,7 @@ router.put("/:user_id/follow", (req, res) => {
 
 
 // USER UNFOLLOW
+
 router.put("/:user_id/unfollow", (req, res) => {
 
     const { user_id } = req.params

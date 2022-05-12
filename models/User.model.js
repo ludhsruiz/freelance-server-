@@ -28,10 +28,12 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
+      default: 'Añade tu descripción'
     },
     occupation: {
       type: String,
-      enum: ['Digital', 'Education', 'Marketing', 'Events', 'Diseño', 'Foto', 'otros']
+      enum: ['Digital', 'Education', 'Marketing', 'Events', 'Diseño', 'Foto', 'Otros'],
+      default: 'Otros'
     },
     role: {
       type: String,
