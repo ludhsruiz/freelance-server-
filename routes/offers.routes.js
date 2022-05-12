@@ -1,6 +1,8 @@
 const router = require("express").Router()
 const { response } = require("express")
 const Offer = require("../models/Offer.model")
+const { isAuthenticated } = require("../middleware/jwt.middleware")
+
 
 
 // ALL OFFERS
@@ -12,14 +14,25 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+// ONE OFFER
+router.get("/:id", (req, res) => {
 
-// OFFER CREATE
-router.post("/create", (req, res) => {
-
-  const { title, companyName, companyLogo, description } = req.body
+  const { id } = req.params
 
   Offer
-    .create({ title, companyName, companyLogo, description })
+    .findById(id)
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
+
+// OFFER CREATE
+router.post("/create", isAuthenticated, (req, res) => {
+
+  const {title, companyName, companyLogo, description } = req.body
+  const publisher = req.payload._id
+
+  Offer
+    .create({ title, companyName, companyLogo, description, publisher })
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })
@@ -31,8 +44,7 @@ router.put("/:id/edit", (req, res ) => {
     const { id } = req.params
     const { title, companyName, companyLogo, description } = req.body
 
-  
-    Course
+    Offer
       .findByIdAndUpdate(id, { title, companyName, companyLogo, description }, {new: true})
       .then(response => res.json(response))
       .catch(err =>res.status(500).json(err))

@@ -34,7 +34,6 @@ router.post('/signup', (req, res, next) => {
     })
 
     .then((createdUser) => {
-      console.log('----', createdUser)
       const { email, name, surname, _id } = createdUser
       const user = { email, name, surname, _id }
 
