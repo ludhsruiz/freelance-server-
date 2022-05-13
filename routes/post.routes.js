@@ -1,30 +1,33 @@
 const router = require("express").Router()
 const Post = require('./../models/Post.model')
+const User = require('./../models/User.model')
 
-//const { isAuthenticated } = require('./../middleware/jwt.middleware')
+const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
-// get or post ?????
-router.get("/:receiver", (req, res) => {
 
-    //const thisUser = req.payload._id
+router.get("/", isAuthenticated, (req, res) => {
 
-    const { receiver } = req.params
+    const thisUser = req.payload._id
+    console.log('llego al server, ', thisUser)
 
     Post
-        .find({ sender: thisUser, receiver })
+        .find({ receiver: thisUser })
         //.select('comment')
+        //.populate('User')
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
 
-router.post("/send", (req, res) => {
+router.post("/send", isAuthenticated, (req, res) => {
 
-    //const thisUser = req.payload._id
+    const sender = req.payload._id
 
     const { receiver, comment } = req.body
 
+    console.log('SERVER_POST= ', req.body)
+
     Post
-        .create({ sender: thisUser, receiver, comment })
+        .create({ sender, receiver, comment })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
