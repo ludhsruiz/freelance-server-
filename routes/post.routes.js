@@ -5,6 +5,9 @@ const User = require('./../models/User.model')
 const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
 
+const test = []
+test.push('hola')
+
 router.get("/", isAuthenticated, (req, res) => {
 
     const thisUser = req.payload._id
@@ -12,10 +15,33 @@ router.get("/", isAuthenticated, (req, res) => {
 
     Post
         .find({ receiver: thisUser })
-        //.select('comment')
-        //.populate('User')
-        .then(response => res.json(response))
-        .catch(err => res.status(500).json(err))
+        .sort({ 'sender': 1 })
+        .populate('sender', '_id name')
+        .select('_id sender comment')
+        .then(response => {
+
+
+            res.json(response)
+
+
+            const result = []
+            result[0] = [response[0]]
+            let index = 0
+
+            for (let i = 0; i < response.length - 1; i++) {
+                if (response[i].sender._id === response[i + 1].sender._id) {
+                    result[index].push(response[i + 1])
+
+                } else {
+                    index += 1
+                    result[index] = []
+                    result[index].push(response[i + 1])
+                }
+            }
+            console.log(result)
+
+        })
+    //.catch(err => res.status(500).json(err))
 })
 
 router.post("/send", isAuthenticated, (req, res) => {
