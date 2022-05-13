@@ -1,10 +1,8 @@
 const router = require("express").Router()
-
 const User = require('./../models/User.model')
+const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
-//const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
-// GET USERS
 router.get("/", (req, res) => {
 
     User
@@ -13,8 +11,7 @@ router.get("/", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-// GET ONE USER
-router.get("/:user_id", (req, res) => {
+router.get("/:user_id", isAuthenticated, (req, res) => {
 
     const { user_id } = req.params
 
@@ -24,7 +21,6 @@ router.get("/:user_id", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-// EDIT USER 
 router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
@@ -36,7 +32,6 @@ router.put("/:user_id/edit", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-// DELETE USER
 router.delete("/:user_id/delete", (req, res) => {
 
     const { user_id } = req.params
@@ -45,9 +40,6 @@ router.delete("/:user_id/delete", (req, res) => {
         .findByIdAndDelete(user_id)
         .catch(err => res.status(500).json(err))
 })
-
-
-// USER FOLLOW
 
 router.put("/:user_id/follow", (req, res) => {
 
@@ -63,9 +55,6 @@ router.put("/:user_id/follow", (req, res) => {
         .then((response) => res.json(response))
         .catch(err => res.status(500).json(err))
 })
-
-
-// USER UNFOLLOW
 
 router.put("/:user_id/unfollow", (req, res) => {
 
