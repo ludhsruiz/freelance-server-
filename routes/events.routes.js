@@ -48,16 +48,17 @@ router.put("/:id/edit", (req, res) => {
   })
 
 
-// EVENT DELETE (( pay back ???? ))
+// EVENT DELETE 
 router.delete("/:id/delete", (req, res) => {
 
     const { id } = req.params
 
+    console.log (id)
     Event
         .findByIdAndDelete(id)
         .then(() => { res.json(response)})
         .catch((err) => next(err))
-})
+      })
 
 
 // EVENT ATTENDANCE  (( pay button n add to user ))
