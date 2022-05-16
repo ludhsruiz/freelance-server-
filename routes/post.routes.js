@@ -20,10 +20,6 @@ router.get("/", isAuthenticated, (req, res) => {
         .select('_id sender comment')
         .then(response => {
 
-
-            res.json(response)
-
-
             const result = []
             result[0] = [response[0]]
             let index = 0
@@ -39,9 +35,10 @@ router.get("/", isAuthenticated, (req, res) => {
                 }
             }
             console.log(result)
+            res.json(result)
 
         })
-    //.catch(err => res.status(500).json(err))
+        .catch(err => res.status(500).json(err))
 })
 
 router.post("/send", isAuthenticated, (req, res) => {

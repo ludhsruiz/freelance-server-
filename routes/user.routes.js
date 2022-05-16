@@ -24,10 +24,21 @@ router.get("/:user_id", isAuthenticated, (req, res) => {
 router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
-    const { name, surname, email, password, description, occupation } = req.body
+    const { name, surname, email, password, profileImg, role, description, occupation } = req.body
 
     User
-        .findByIdAndUpdate(user_id, { name, surname, email, password, description, occupation }, { new: true })
+        .findByIdAndUpdate(user_id, { name, surname, email, password, profileImg, role, description, occupation }, { new: true })
+        .then(response => res.json(response))
+        .catch(err => res.status(500).json(err))
+})
+
+router.put("/:user_id/role", (req, res) => {
+
+    const { user_id } = req.params
+    const { role } = req.body
+
+    User
+        .findByIdAndUpdate(user_id, { role }, { new: true })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
