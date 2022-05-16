@@ -31,6 +31,16 @@ router.get('/', (req, res) => {
 })
 
 
+// GET ONE SUBSCRIPTIONS 
+router.get('/:id', (req, res) => {
+
+    Subscription
+        .find(id)
+        .then(response => res.json(response))
+        .catch(err => res.status(500).json(err))
+})
+
+
 
 // DELETE SUBSCRIPTION
 router.delete('/:id/delete', (req, res) => {
