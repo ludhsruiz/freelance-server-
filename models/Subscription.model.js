@@ -3,15 +3,14 @@ const { Schema, model } = require("mongoose");
 const subscriptionSchema = new Schema(
   {
     publisher: {
-        type: Schema.Types.ObjectId,
-         ref: 'User'
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     },
-    totalPrice: {
-        type: Number,
-        default: 120
+    amount: {
+      type: Number
     },
-   },
-   { timestamps: true }
+  },
+  { timestamps: true }
 );
 
 const Subscription = model("Subscription", subscriptionSchema);

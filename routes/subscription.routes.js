@@ -8,14 +8,11 @@ const Subscription = require('../models/Subscription.model')
 // CREATE SUBSCRIPTION
 router.post('/create', (req, res) => {
 
-    const { Publisher } = req.body
-    // const { _id } = req.payload
+    console.log('me suscribo')
+    const { publisher, amount } = req.body
 
-    Publisher
-        .findById(Publisher)
-        // .then(() => {
-        //     return Subscription.create({ publisher:_id, year, totalPrice})
-        // })
+    Subscription
+        .create({ publisher, amount })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
@@ -35,7 +32,8 @@ router.get('/', (req, res) => {
 router.get('/:id', (req, res) => {
 
     Subscription
-        .find(id)
+        .find()
+        .populate('publisher')
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
