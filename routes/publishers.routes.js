@@ -31,13 +31,8 @@ router.post("/create", (req, res) => {
 
   Publisher
     .create({ name, contacto, companyLogo, description, owner })
-    // .then(() => {
-    //   return Subscription.create({ publisher: userId, totalPrice})
-    //  })
-
     .then(response => res.json(response))
     .catch(err => {
-      console.log(err)
       res.status(500).json(err)
     })
 
