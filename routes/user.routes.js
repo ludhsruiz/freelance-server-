@@ -52,24 +52,21 @@ router.delete("/:user_id/delete", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.put("/:user_id/follow", (req, res) => {
+router.put("/:user_id/follow", isAuthenticated, (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.payload._id
 
-    // const promises = [User.findByIdAndUpdate(thisUser,  { following: user_id } ),
-    // User.findByIdAndUpdate(user_id, { $addToSet: { follower: thisUser } })]
+    const promises = [User.findByIdAndUpdate(thisUser, {$addToSet: { following: user_id }} ),
+    User.findByIdAndUpdate(user_id, { $addToSet: { follower: thisUser } })]
 
-
-    // Promise
-    //     .all(promises)
-    User
-        .findByIdAndUpdate(thisUser,{ following: user_id } )
+    Promise
+        .all(promises)
         .then((response) => res.json(response))
         .catch(err => res.status(500).json(err))
 })
 
-router.put("/:user_id/unfollow", (req, res) => {
+router.put("/:user_id/unfollow", isAuthenticated, (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.payload._id

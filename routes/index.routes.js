@@ -22,5 +22,7 @@ router.use("/post", require('./post.routes'))
 
 router.use("/subscription", require('./subscription.routes'))
 
+router.use("/upload", require('./upload.routes'))
+
 
 module.exports = router

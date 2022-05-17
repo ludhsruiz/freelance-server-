@@ -79,10 +79,10 @@ router.delete("/:id/delete", (req, res, next) => {
 router.put("/:id/follow", (req, res, next) => {
 
   const { id } = req.params;
-  // const { _id } = req.payload
+  const thisUser = req.payload._id    
 
   Publisher
-    .findByIdAndUpdate(_id, { $addToSet: { publishers: id } })
+    .findByIdAndUpdate(thisUser, { $addToSet: { publishers: id } })
     .then(response => res.json(response))
     .catch((err) => next(err))
 })
@@ -92,10 +92,10 @@ router.put("/:id/follow", (req, res, next) => {
 router.put("/:id/unfollow", (req, res, next) => {
 
   const { id } = req.params;
-  // const { _id } = req.payload
+  const thisUser = req.payload._id    
 
   Publisher
-    .findByIdAndUpdate(_id, { $pull: { publishers: id } })
+    .findByIdAndUpdate(thisUser, { $pull: { publishers: id } })
     .then(response => res.json(response))
     .catch((err) => next(err))
 })

@@ -63,16 +63,29 @@ router.delete("/:id/delete", (req, res) => {
 })
 
 
-// OFFER SUBSCRIBE (( send to publisher info ??? ))
-router.put("/:id/subscribe", (req, res) => {
+// OFFER SUBSCRIBE
+router.put("/:id/subscribe", isAuthenticated, (req, res) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id    ____ token
+    const thisUser = req.payload._id    
 
     Offer
-        .findByIdAndUpdate(thisUser, { $addToSet: { courses : id } })
+        .findByIdAndUpdate(id, { $addToSet: { subscribers : thisUser } })
         .then(response => { res.json(response)})
         .catch((err) => next(err))
+})
+
+// OFFER UNSUBSCRIBE
+
+router.put("/:id/unsubscribe", isAuthenticated, (req, res) => {
+
+  const { id } = req.params;
+  const thisUser = req.payload._id    
+
+  Offer
+      .findByIdAndUpdate(id, { $pull: { subscribers: thisUser } })
+      .then(response => { res.json(response)})
+      .catch((err) => next(err))
 })
 
 

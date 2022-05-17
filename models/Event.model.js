@@ -30,7 +30,7 @@ const eventSchema = new Schema(
                    ref:"User",
                },
            ], 
-    representative:  {
+    owner:  {
                    type: Schema.Types.ObjectId,
                    ref:"User",
                 },

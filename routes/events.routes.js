@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const { response } = require("express")
+const { isAuthenticated } = require("../middleware/jwt.middleware")
 const Event = require("../models/Event.model")
 
 
@@ -13,7 +14,7 @@ router.get("/", (req, res) => {
 })
 
 // ONE EVENT
-router.get("/:id", (req, res) => {
+router.get("/:id", isAuthenticated, (req, res) => {
 
   const { id } = req.params
 
@@ -62,26 +63,27 @@ router.delete("/:id/delete", (req, res) => {
 
 
 // EVENT ATTENDANCE  (( pay button n add to user ))
-router.put("/:id/attendance", (req, res) => {
+router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id    ____ token
+    const thisUser = req.payload._id   
 
-    Publisher
-        .findByIdAndUpdate(thisUser, { $addToSet: { events : id } })
+    Event
+        .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
         .then(response => { res.json(response)})
         .catch((err) => next(err))
 })
 
 
 // LEAVE EVENT    (( pay button n delete from user  ))
-router.put("/:id/leave",  (req, res) => {
+router.put("/:id/leave", isAuthenticated,  (req, res) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id
+    const thisUser = req.payload._id   
 
-    Publisher     
-        .findByIdAndUpdate(thisUser, { $pull: { events : id } })
+
+    Event     
+        .findByIdAndUpdate(id, { $pull: { attendants: thisUser } })
         .then(() => { res.json(response) })
         .catch((err) => next(err))
 })
