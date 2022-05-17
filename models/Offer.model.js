@@ -22,6 +22,12 @@ const offerSchema = new Schema(
                 type: Schema.Types.ObjectId,
                 ref:"User",
     },
+    subscribers: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        }
+      ]  
     },
     { timestamps: true }
 );

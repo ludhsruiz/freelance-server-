@@ -54,27 +54,9 @@ const userSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "User",
-      },
-    ],
-    publishers: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Publisher",
-      },
-    ],
-    events: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Event",
-      },
-    ],
-    courses: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Course",
-      },
-    ],
-  },
+      }
+    ]      
+   },
   { timestamps: true }
 );
 

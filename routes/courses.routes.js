@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const { response } = require("express")
+const { isAuthenticated } = require("../middleware/jwt.middleware")
 const Course = require("../models/Course.model")
 
 
@@ -61,26 +62,26 @@ router.delete("/:id/delete", (req, res ) => {
 
 
 // COURSE ATTENDANCE  (( pay button n add to user ))
-router.put("/:id/attendance", (req, res) => {
+router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id    ____ token
+    const thisUser = req.payload._id    
 
     Course
-        .findByIdAndUpdate(thisUser, { $addToSet: { courses : id } })
+        .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
         .then(response => { res.json(response)})
         .catch((err) => next(err))
 })
 
 
 // LEAVE COURSE    (( pay button n delete from user  ))
-router.put("/:id/leave",  (req, res ) => {
+router.put("/:id/leave", isAuthenticated, (req, res ) => {
 
     const { id } = req.params;
-    // const thisUser = req.session.currentUser._id
+    const thisUser = req.payload._id    
 
     Course     
-        .findByIdAndUpdate(thisUser, { $pull: { events : id } })
+        .findByIdAndUpdate(id, { $pull: { attendants: thisUser } })
         .then(() => { res.json(response) })
         .catch((err) => next(err))
 })
