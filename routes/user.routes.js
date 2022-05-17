@@ -24,10 +24,10 @@ router.get("/:user_id", isAuthenticated, (req, res) => {
 router.put("/:user_id/edit", (req, res) => {
 
     const { user_id } = req.params
-    const { name, surname, email, password, profileImg, role, description, occupation } = req.body
+    const { name, surname, email, password, profileImg, role, description, bio, occupation } = req.body
 
     User
-        .findByIdAndUpdate(user_id, { name, surname, email, password, profileImg, role, description, occupation }, { new: true })
+        .findByIdAndUpdate(user_id, { name, surname, email, password, profileImg, role, description, bio, occupation }, { new: true })
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
@@ -52,36 +52,39 @@ router.delete("/:user_id/delete", (req, res) => {
         .catch(err => res.status(500).json(err))
 })
 
-router.put("/:user_id/follow", (req, res) => {
+router.put("/:user_id/follow", isAuthenticated, (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.payload._id
+    console.log('xxxxxxx', user_id)
 
-    // const promises = [User.findByIdAndUpdate(thisUser,  { following: user_id } ),
-    // User.findByIdAndUpdate(user_id, { $addToSet: { follower: thisUser } })]
-
+    User
+        .findByIdAndUpdate(thisUser, { $addToSet: { follower: user_id } })
+        // User.findByIdAndUpdate(user_id, { $addToSet: { follower: thisUser } })]
+        .then((response) => res.json(response))
+        .catch(err => res.status(500).json(err))
 
     // Promise
     //     .all(promises)
-    User
-        .findByIdAndUpdate(thisUser,{ following: user_id } )
-        .then((response) => res.json(response))
-        .catch(err => res.status(500).json(err))
+    // User
+    //     .findByIdAndUpdate(thisUser, { following: user_id })
+    //     .then((response) => res.json(response))
+    //     .catch(err => res.status(500).json(err))
 })
 
-router.put("/:user_id/unfollow", (req, res) => {
+// router.put("/:user_id/unfollow", (req, res) => {
 
-    const { user_id } = req.params
-    const thisUser = req.payload._id
+//     const { user_id } = req.params
+//     const thisUser = req.payload._id
 
-    const promises = [User.findByIdAndUpdate(thisUser, { $pull: { following: user_id } }),
-    User.findByIdAndUpdate(user_id, { $pull: { follower: thisUser } })]
+//     const promises = [User.findByIdAndUpdate(thisUser, { $pull: { following: user_id } }),
+//     User.findByIdAndUpdate(user_id, { $pull: { follower: thisUser } })]
 
 
-    Promise
-        .all(promises)
-        .then((response) => res.json(response))
-        .catch(err => res.status(500).json(err))
+//     Promise
+//         .all(promises)
+//         .then((response) => res.json(response))
+//         .catch(err => res.status(500).json(err))
 
-})
+// })
 module.exports = router

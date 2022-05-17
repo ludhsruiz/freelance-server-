@@ -28,7 +28,11 @@ const userSchema = new Schema(
     },
     description: {
       type: String,
-      default: 'Añade tu descripción'
+      default: 'Añade una descripción corta'
+    },
+    bio: {
+      type: String,
+      default: 'Añade aquí tu bio'
     },
     occupation: {
       type: String,
