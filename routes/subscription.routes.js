@@ -29,10 +29,22 @@ router.get('/', (req, res) => {
 
 
 // GET ONE SUBSCRIPTIONS 
-router.get('/:id', (req, res) => {
+// router.get('/:id', (req, res) => {
+
+//     Subscription
+//         .find()
+//         .populate('publisher')
+//         .then(response => res.json(response))
+//         .catch(err => res.status(500).json(err))
+// })
+
+// GET ONE SUBSCRIBER id = publisher
+router.get('/:id/publisher', (req, res) => {
+
+    const { id } = req.params
 
     Subscription
-        .find()
+        .find({ 'publisher': id })
         .populate('publisher')
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
@@ -41,15 +53,15 @@ router.get('/:id', (req, res) => {
 
 
 // DELETE SUBSCRIPTION
-router.delete('/:id/delete', (req, res) => {
+// router.delete('/:id/delete', (req, res) => {
 
-    const { subscription_id } = req.params
+//     const { subscription_id } = req.params
 
-    Subscription
-        .findByIdAndRemove(subscription_id)
-        .then(response => res.json(response))
-        .catch(err => res.status(500).json(err))
-})
+//     Subscription
+//         .findByIdAndRemove(subscription_id)
+//         .then(response => res.json(response))
+//         .catch(err => res.status(500).json(err))
+// })
 
 
 module.exports = router

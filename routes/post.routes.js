@@ -11,7 +11,6 @@ test.push('hola')
 router.get("/", isAuthenticated, (req, res) => {
 
     const thisUser = req.payload._id
-    console.log('llego al server, ', thisUser)
 
     Post
         .find({ receiver: thisUser })
@@ -34,7 +33,7 @@ router.get("/", isAuthenticated, (req, res) => {
                     result[index].push(response[i + 1])
                 }
             }
-            console.log(result)
+
             res.json(result)
 
         })
@@ -46,8 +45,6 @@ router.post("/send", isAuthenticated, (req, res) => {
     const sender = req.payload._id
 
     const { receiver, comment } = req.body
-
-    console.log('SERVER_POST= ', req.body)
 
     Post
         .create({ sender, receiver, comment })

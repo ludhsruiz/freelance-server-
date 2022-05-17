@@ -23,6 +23,17 @@ router.get("/:publisher_id", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+// GET ONE PUBLISHER BY OWNER_________________________
+router.get("/owner/:id", (req, res) => {
+
+  const { id } = req.params
+  Publisher
+    .find({ 'owner': id })
+    .populate()
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
+
 // PUBLISHERS CREATE
 router.post("/create", (req, res) => {
 
