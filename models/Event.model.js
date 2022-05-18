@@ -22,7 +22,8 @@ const eventSchema = new Schema(
             type: String
     },
     price: {
-        type: Number
+        type: Number,
+        default : 0
     },
     attendants:  [
                {
