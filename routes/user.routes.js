@@ -56,7 +56,6 @@ router.put("/:user_id/follow", isAuthenticated, (req, res) => {
 
     const { user_id } = req.params
     const thisUser = req.payload._id
-    console.log('xxxxxxx', user_id)
 
     const promises = [User.findByIdAndUpdate(thisUser, { $addToSet: { following: user_id } }),
     User.findByIdAndUpdate(user_id, { $addToSet: { follower: thisUser } })]
