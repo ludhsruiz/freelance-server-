@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
 
   Event
     .find()
+    .populate()
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })
@@ -38,54 +39,54 @@ router.post("/create", (req, res) => {
 // EVENTS EDIT
 router.put("/:id/edit", (req, res) => {
 
-    const { id } = req.params
-    const { title, description, date, img, location, price } = req.body
+  const { id } = req.params
+  const { title, description, date, img, location, price } = req.body
 
-  
-    Event
-      .findByIdAndUpdate(id, { title, description, date, img, location, price }, {new: true})
-      .then(response => res.json(response))
-      .catch(err =>res.status(500).json(err))
-  })
+
+  Event
+    .findByIdAndUpdate(id, { title, description, date, img, location, price }, { new: true })
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
 
 
 // EVENT DELETE 
 router.delete("/:id/delete", (req, res) => {
 
-    const { id } = req.params
+  const { id } = req.params
 
-    console.log (id)
-    Event
-        .findByIdAndDelete(id)
-        .then(() => { res.json(response)})
-        .catch((err) => next(err))
-      })
+  console.log(id)
+  Event
+    .findByIdAndDelete(id)
+    .then(() => { res.json(response) })
+    .catch((err) => next(err))
+})
 
 
 // EVENT ATTENDANCE  (( pay button n add to user ))
 router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
-    const { id } = req.params;
-    const thisUser = req.payload._id   
+  const { id } = req.params;
+  const thisUser = req.payload._id
 
-    Event
-        .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
-        .then(response => { res.json(response)})
-        .catch((err) => next(err))
+  Event
+    .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
+    .then(response => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 
 // LEAVE EVENT    (( pay button n delete from user  ))
-router.put("/:id/leave", isAuthenticated,  (req, res) => {
+router.put("/:id/leave", isAuthenticated, (req, res) => {
 
-    const { id } = req.params;
-    const thisUser = req.payload._id   
+  const { id } = req.params;
+  const thisUser = req.payload._id
 
 
-    Event     
-        .findByIdAndUpdate(id, { $pull: { attendants: thisUser } })
-        .then(() => { res.json(response) })
-        .catch((err) => next(err))
+  Event
+    .findByIdAndUpdate(id, { $pull: { attendants: thisUser } })
+    .then(() => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 

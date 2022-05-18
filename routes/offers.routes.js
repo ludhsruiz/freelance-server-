@@ -10,6 +10,7 @@ router.get("/", (req, res) => {
 
   Offer
     .find()
+    .populate('publisher')
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })
@@ -28,7 +29,7 @@ router.get("/:id", (req, res) => {
 // OFFER CREATE
 router.post("/create", isAuthenticated, (req, res) => {
 
-  const {title, companyName, companyLogo, description } = req.body
+  const { title, companyName, companyLogo, description } = req.body
   const publisher = req.payload._id
 
   Offer
@@ -39,40 +40,40 @@ router.post("/create", isAuthenticated, (req, res) => {
 
 
 // OFFER EDIT
-router.put("/:id/edit", (req, res ) => {
+router.put("/:id/edit", (req, res) => {
 
-    const { id } = req.params
-    const { title, companyName, companyLogo, description } = req.body
+  const { id } = req.params
+  const { title, companyName, companyLogo, description } = req.body
 
-    Offer
-      .findByIdAndUpdate(id, { title, companyName, companyLogo, description }, {new: true})
-      .then(response => res.json(response))
-      .catch(err =>res.status(500).json(err))
-  })
+  Offer
+    .findByIdAndUpdate(id, { title, companyName, companyLogo, description }, { new: true })
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
 
 
 // OFFER DELETE 
 router.delete("/:id/delete", (req, res) => {
 
-    const { id } = req.params
+  const { id } = req.params
 
-    Offer
-        .findByIdAndDelete(id)
-        .then(() => { res.json(response)})
-        .catch((err) => next(err))
+  Offer
+    .findByIdAndDelete(id)
+    .then(() => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 
 // OFFER SUBSCRIBE
 router.put("/:id/subscribe", isAuthenticated, (req, res) => {
 
-    const { id } = req.params;
-    const thisUser = req.payload._id    
+  const { id } = req.params;
+  const thisUser = req.payload._id
 
-    Offer
-        .findByIdAndUpdate(id, { $addToSet: { subscribers : thisUser } })
-        .then(response => { res.json(response)})
-        .catch((err) => next(err))
+  Offer
+    .findByIdAndUpdate(id, { $addToSet: { subscribers: thisUser } })
+    .then(response => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 // OFFER UNSUBSCRIBE
@@ -80,12 +81,12 @@ router.put("/:id/subscribe", isAuthenticated, (req, res) => {
 router.put("/:id/unsubscribe", isAuthenticated, (req, res) => {
 
   const { id } = req.params;
-  const thisUser = req.payload._id    
+  const thisUser = req.payload._id
 
   Offer
-      .findByIdAndUpdate(id, { $pull: { subscribers: thisUser } })
-      .then(response => { res.json(response)})
-      .catch((err) => next(err))
+    .findByIdAndUpdate(id, { $pull: { subscribers: thisUser } })
+    .then(response => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 
