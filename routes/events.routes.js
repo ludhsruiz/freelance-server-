@@ -41,10 +41,17 @@ router.put("/:id/edit", (req, res) => {
 
   const { id } = req.params
   const { title, description, date, img, location, price } = req.body
+  let query = {}
 
-
+  if (img === '') {
+    query = { title, description, date, location, price }
+  } else {
+    query = { title, description, date, img, location, price }
+  }
+  
+  
   Event
-    .findByIdAndUpdate(id, { title, description, date, img, location, price }, { new: true })
+    .findByIdAndUpdate(id, query, { new: true })
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })

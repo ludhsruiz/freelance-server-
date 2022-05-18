@@ -5,8 +5,6 @@ const User = require('./../models/User.model')
 const { isAuthenticated } = require('./../middleware/jwt.middleware')
 
 
-const test = []
-test.push('hola')
 
 router.get("/", isAuthenticated, (req, res) => {
 
@@ -16,7 +14,7 @@ router.get("/", isAuthenticated, (req, res) => {
         .find({ receiver: thisUser })
         .sort({ 'sender': 1 })
         .populate('sender', '_id name')
-        .select('_id sender comment')
+        .select('_id sender comment createdAt')
         .then(response => {
 
             const result = []
