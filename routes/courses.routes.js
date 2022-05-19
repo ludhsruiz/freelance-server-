@@ -30,51 +30,6 @@ router.get("/own/:id", isAuthenticated, (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-// ONE COURSE
-router.get("/:id", (req, res) => {
-
-  const { id } = req.params
-
-  Course
-    .find()
-    //.populate('attendants')
-    .then(response => {
-      const result = []
-      response.forEach(elm => {
-
-        elm.attendants.forEach(el => {
-          if (el == id) { result.push(elm) }
-        })
-      })
-
-      res.json(result)
-    })
-    .catch(err => res.status(500).json(err))
-})
-
-
-// ONE COURSE BY LOGGED
-router.get("/own", isAuthenticated, (req, res) => {
-
-  const thisUser = req.payload._id
-
-  Course
-    .find()
-    //.populate('attendants')
-    .then(response => {
-      const result = []
-      response.forEach(elm => {
-
-        elm.attendants.forEach(el => {
-          if (el == thisUser) { result.push(elm) }
-        })
-     })
-
-      res.json(result)
-    })
-    .catch(err => res.status(500).json(err))
-})
-
 
 // COURSE CREATE
 router.post("/create", isAuthenticated, (req, res, next) => {
@@ -89,7 +44,7 @@ router.post("/create", isAuthenticated, (req, res, next) => {
 })
 
 // ONE COURSE
-router.get("/:id/nnnn", (req, res) => {
+router.get("/:id", (req, res) => {
 
   const { id } = req.params
 
@@ -129,13 +84,13 @@ router.delete("/:id/delete", (req, res) => {
 // COURSE ATTENDANCE  (( pay button n add to user ))
 router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
-    const { id } = req.params
-    const thisUser = req.payload._id    
+  const { id } = req.params
+  const thisUser = req.payload._id
 
-    Course
-        .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
-        .then(response => { res.json(response)})
-        .catch((err) => next(err))
+  Course
+    .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
+    .then(response => { res.json(response) })
+    .catch((err) => next(err))
 })
 
 
