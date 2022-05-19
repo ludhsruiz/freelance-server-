@@ -29,8 +29,7 @@ router.get("/own/:id", isAuthenticated, (req, res) => {
       response.forEach(elm => {
 
         elm.attendants.forEach(el => {
-          console.log('cada attendant', el)
-          console.log('el user', id)
+
           if (el == id) { result.push(elm) }
 
         })
