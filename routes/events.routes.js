@@ -14,14 +14,61 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-// ONE EVENT
-router.get("/:id", isAuthenticated, (req, res) => {
+// ONE EVENT BY IDUSER
+router.get("/own/:id", isAuthenticated, (req, res) => {
+
 
   const { id } = req.params
 
+
   Event
-    .findById(id)
-    .then(response => res.json(response))
+    .find()
+    //.populate('attendants')
+    .then(response => {
+      const result = []
+      response.forEach(elm => {
+
+        elm.attendants.forEach(el => {
+          console.log('cada attendant', el)
+          console.log('el user', id)
+          if (el == id) { result.push(elm) }
+
+        })
+
+
+      })
+
+      res.json(result)
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+// ONE EVENT BY IDUSER
+router.get("/own", isAuthenticated, (req, res) => {
+
+  const thisUser = req.payload._id
+  //const { thisUser } = req.body
+
+
+  Event
+    .find()
+    //.populate('attendants')
+    .then(response => {
+      const result = []
+      response.forEach(elm => {
+
+        elm.attendants.forEach(el => {
+          console.log('cada attendant', el)
+          console.log('el user', thisUser)
+          if (el == thisUser) { result.push(elm) }
+
+        })
+
+
+      })
+
+      res.json(result)
+    })
     .catch(err => res.status(500).json(err))
 })
 
@@ -32,6 +79,18 @@ router.post("/create", (req, res) => {
 
   Event
     .create({ title, description, date, img, location, price })
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
+
+// ONE EVENT
+router.get("/:id", isAuthenticated, (req, res) => {
+
+  const { id } = req.params
+
+  Event
+    .findById(id)
+    .populate('attendants')
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })
@@ -48,8 +107,8 @@ router.put("/:id/edit", (req, res) => {
   } else {
     query = { title, description, date, img, location, price }
   }
-  
-  
+
+
   Event
     .findByIdAndUpdate(id, query, { new: true })
     .then(response => res.json(response))
@@ -75,6 +134,8 @@ router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
   const { id } = req.params;
   const thisUser = req.payload._id
+
+  console.log('EVENT ATTENDANCE ', req.params, thisUser)
 
   Event
     .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
