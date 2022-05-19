@@ -81,4 +81,28 @@ router.put("/:user_id/unfollow", isAuthenticated, (req, res) => {
         .catch(err => res.status(500).json(err))
 
 })
+
+router.get("/:user_id/followers", isAuthenticated, (req, res) => {
+
+    const { user_id } = req.params
+
+    User
+        .findById(user_id)
+        .populate('follower')
+        .then(response => res.json(response))
+        .catch(err => res.status(500).json(err))
+})
+
+router.get("/:user_id/following", isAuthenticated, (req, res) => {
+
+    const { user_id } = req.params
+
+    User
+        .findById(user_id)
+        .populate('following')
+        .then(response => res.json(response))
+        .catch(err => res.status(500).json(err))
+})
+
+
 module.exports = router

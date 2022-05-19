@@ -13,8 +13,66 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+// ONE COURSES BY IDUSER
+router.get("/own/:id", isAuthenticated, (req, res) => {
+
+  const { id } = req.params
+
+  Course
+    .find()
+    //.populate('attendants')
+    .then(response => {
+      const result = []
+      response.forEach(elm => {
+
+        elm.attendants.forEach(el => {
+          if (el == id) { result.push(elm) }
+        })
+      })
+
+      res.json(result)
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+
+// ONE COURSE BY LOGGED
+router.get("/own", isAuthenticated, (req, res) => {
+
+  const thisUser = req.payload._id
+
+  Course
+    .find()
+    //.populate('attendants')
+    .then(response => {
+      const result = []
+      response.forEach(elm => {
+
+        elm.attendants.forEach(el => {
+          if (el == thisUser) { result.push(elm) }
+        })
+     })
+
+      res.json(result)
+    })
+    .catch(err => res.status(500).json(err))
+})
+
+
+// COURSE CREATE
+router.post("/create", isAuthenticated, (req, res, next) => {
+
+  const { name, description, date, img, location, price } = req.body
+  const owner = req.payload._id
+
+  Course
+    .create({ name, description, date, img, location, price, owner })
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
+
 // ONE COURSE
-router.get("/:id", (req, res) => {
+router.get("/:id/nnnn", (req, res) => {
 
   const { id } = req.params
 
@@ -24,16 +82,6 @@ router.get("/:id", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-// COURSE CREATE
-router.post("/create", (req, res, next) => {
-
-  const { name, description, date, img, location, price } = req.body
-
-  Course
-    .create({ name, description, date, img, location, price })
-    .then(response => res.json(response))
-    .catch(err => res.status(500).json(err))
-})
 
 // COURSE EDIT
 router.put("/:id/edit", (req, res) => {
@@ -64,9 +112,11 @@ router.delete("/:id/delete", (req, res ) => {
 // COURSE ATTENDANCE  (( pay button n add to user ))
 router.put("/:id/attendance", isAuthenticated, (req, res) => {
 
-    const { id } = req.params;
+    const { id } = req.params
     const thisUser = req.payload._id    
 
+    
+  console.log('IDS ____',id,'....',thisUser )
     Course
         .findByIdAndUpdate(id, { $addToSet: { attendants: thisUser } })
         .then(response => { res.json(response)})
