@@ -17,9 +17,7 @@ router.get("/", (req, res) => {
 // ONE EVENT BY IDUSER
 router.get("/own/:id", isAuthenticated, (req, res) => {
 
-
   const { id } = req.params
-
 
   Event
     .find()
@@ -42,42 +40,15 @@ router.get("/own/:id", isAuthenticated, (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-// ONE EVENT BY IDUSER
-router.get("/own", isAuthenticated, (req, res) => {
-
-  const thisUser = req.payload._id
-  //const { thisUser } = req.body
-
-
-  Event
-    .find()
-    //.populate('attendants')
-    .then(response => {
-      const result = []
-      response.forEach(elm => {
-
-        elm.attendants.forEach(el => {
-          console.log('cada attendant', el)
-          console.log('el user', thisUser)
-          if (el == thisUser) { result.push(elm) }
-
-        })
-
-
-      })
-
-      res.json(result)
-    })
-    .catch(err => res.status(500).json(err))
-})
 
 // EVENT CREATE
-router.post("/create", (req, res) => {
+router.post("/create",  isAuthenticated,  (req, res) => {
 
   const { title, description, date, img, location, price } = req.body
+  const owner = req.payload._id
 
   Event
-    .create({ title, description, date, img, location, price })
+    .create({ title, description, date, img, location, price, owner })
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })

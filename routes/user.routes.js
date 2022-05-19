@@ -90,8 +90,11 @@ router.get("/:user_id/followers", isAuthenticated, (req, res) => {
         .then(response => res.json(response))
         .catch(err => res.status(500).json(err))
 })
+
 router.get("/:user_id/following", isAuthenticated, (req, res) => {
+
     const { user_id } = req.params
+
     User
         .findById(user_id)
         .populate('following')

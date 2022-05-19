@@ -15,16 +15,31 @@ router.get("/", (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
-// ONE OFFER
-router.get("/:id", (req, res) => {
+
+// GET OFFERS BY USER 
+router.get("/own/:id", isAuthenticated, (req, res) => {
 
   const { id } = req.params
 
   Offer
-    .findById(id)
-    .then(response => res.json(response))
+    .find()
+    // .populate('subscribers')
+    .then(response => {
+
+      const result = []
+      response.forEach(elm => {
+
+        elm.subscribers.forEach(el => {
+          if (el == id) { result.push(elm) }
+
+        })
+      })
+
+      res.json(result)
+    })
     .catch(err => res.status(500).json(err))
 })
+
 
 // OFFER CREATE
 router.post("/create", isAuthenticated, (req, res) => {
@@ -38,6 +53,17 @@ router.post("/create", isAuthenticated, (req, res) => {
     .catch(err => res.status(500).json(err))
 })
 
+
+// ONE OFFER
+router.get("/:id", (req, res) => {
+
+  const { id } = req.params
+
+  Offer
+    .findById(id)
+    .then(response => res.json(response))
+    .catch(err => res.status(500).json(err))
+})
 
 // OFFER EDIT
 router.put("/:id/edit", (req, res) => {
