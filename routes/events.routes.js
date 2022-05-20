@@ -9,8 +9,10 @@ router.get("/", (req, res) => {
 
   Event
     .find()
-    .populate()
-    .then(response => res.json(response))
+    .populate('owner')
+    .then(response => {
+      res.json(response)
+    })
     .catch(err => res.status(500).json(err))
 })
 
@@ -42,7 +44,7 @@ router.get("/own/:id", isAuthenticated, (req, res) => {
 
 
 // EVENT CREATE
-router.post("/create",  isAuthenticated,  (req, res) => {
+router.post("/create", isAuthenticated, (req, res) => {
 
   const { title, description, date, img, location, price } = req.body
   const owner = req.payload._id
