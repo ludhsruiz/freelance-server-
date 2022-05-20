@@ -23,7 +23,7 @@ router.get("/own/:id", isAuthenticated, (req, res) => {
 
   Offer
     .find()
-    // .populate('subscribers')
+    .populate('subscribers')
     .then(response => {
 
       const result = []
