@@ -9,6 +9,7 @@ router.get("/", (req, res) => {
 
   Course
     .find()
+    .populate('owner')
     .then(response => res.json(response))
     .catch(err => res.status(500).json(err))
 })
